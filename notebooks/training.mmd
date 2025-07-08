@@ -1,0 +1,38 @@
+
+flowchart
+  %% === Training #1: Track2Vec ===
+  subgraph T1[Training #1: Track2Vec]
+    A1[Audio Files] --> B1[Organised as Playlist]
+    B1 --> B2[Train Track2Vec on Playlist]
+    B2 --> C[Track2Vec Embeddings 100D \nUsed as Labels for Training #2]
+  end
+
+
+  %% === Training #2: Mp3ToVec ===
+  subgraph T2[Training #2: Mp3ToVec]
+    D1[Audio Files] --> E1[Log-Mel Spectrograms]
+    C --> F1[Labels]
+    E1 --> G1[Train Mp3ToVec CNN\nwith CosineSimilarity Loss]
+    F1 --> G1
+  end
+
+
+  %% === Inference ===
+  subgraph INF[Inference]
+    I1[Audio Files] --> I2[Log-Mel Spectrogram]
+    I2 --> I3[Use Trained Mp3ToVec CNN to create Embeddings]
+    G1 --> I3
+    I4[Query File]
+    I3 --> I5
+    I4 --> I5[Cosine Similarity to Find Similar Songs To Query]
+  end
+
+    subgraph t[Training]
+        T1
+        T2
+
+    end
+  %% === Force subgraph order ===
+  C --> D1
+  G1 --> I1
+  linkStyle 12,13 stroke:transparent;

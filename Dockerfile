@@ -13,17 +13,16 @@ RUN apt-get update && apt-get install -y \
 
 # Copy Python dependencies
 COPY requirements.txt .
-COPY requirements-lock.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -r requirements-lock.txt
 
 # (Optional) Install Jupyter for interactive dev
 RUN pip install notebook
 
 # Expose Jupyter port or app port
 EXPOSE 8888
+
 
 # Default to interactive bash (you can override in docker-compose)
 CMD ["sleep", "infinity"]

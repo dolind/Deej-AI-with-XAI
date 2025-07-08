@@ -7,7 +7,7 @@ services:
       - .:/app
     ports:
       - "8888:8888"
-    command: ["sleep", "infinity"]
+    command: ["bash"]
     deploy:
       resources:
         reservations:

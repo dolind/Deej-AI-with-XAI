@@ -4,7 +4,11 @@
 ## Docker image
 
 Build and rebuild with `docker compose up --build`
+### Run Jupyter in Docker
 
+jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --no-browser --NotebookApp.token=''
+
+Then use IDE to attach or go to browser localhost:8888
 
 # Deej-A.I.
 
