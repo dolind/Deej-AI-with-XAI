@@ -11,6 +11,8 @@ import pickle
 from tqdm import tqdm
 import argparse
 import random
+import os
+os.environ['NUMBA_CACHE_DIR'] = '/tmp/numba_cache'
 
 def walkmp3s(folder):
     for dirpath, dirs, files in os.walk(folder, topdown=False):
@@ -67,12 +69,15 @@ if __name__ == '__main__':
             with tqdm(files, unit="file") as t:
                 for pickle_filename, full_path in t:
                     try:
+                        print(os.path.exists(full_path), full_path)
                         y, sr = librosa.load(full_path, mono=True)
                         if y.shape[0] < slice_size:
+                            print(y.shape[0], slice_size)
                             print(f'Skipping {full_path}')
                             continue
                         S = librosa.feature.melspectrogram(y=y, sr=sr, n_fft=n_fft, hop_length=hop_length, n_mels=n_mels, fmax=sr/2)
                         x = np.ndarray(shape=(S.shape[1] // slice_size, n_mels, slice_size, 1), dtype=float)
+
                         for slice in range(S.shape[1] // slice_size):
                             log_S = librosa.power_to_db(S[:, slice * slice_size : (slice+1) * slice_size], ref=np.max)
                             if np.max(log_S) - np.min(log_S) != 0:
@@ -81,7 +86,10 @@ if __name__ == '__main__':
                         pickle.dump((full_path, model.predict(x, verbose=0)), open(dump_directory + '/' + pickle_filename, 'wb'))
                     except KeyboardInterrupt:
                         raise
-                    except:
+                    except Exception as e:
+                        print("Exception type:", type(e).__name__)
+                        print("Exception message:", str(e))
+                        print("Full traceback:")
                         print(f'Skipping {full_path}')
                         continue
         except KeyboardInterrupt:

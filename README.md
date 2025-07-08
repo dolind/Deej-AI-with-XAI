@@ -1,4 +1,10 @@
-![](MBIT_logo.png)
+![](MBIT_logo.png)  
+
+# Fork modifications
+## Docker image
+
+Build and rebuild with `docker compose up --build`
+
 
 # Deej-A.I.
 

@@ -1,0 +1,20 @@
+services:
+  keras-dev:
+    build: .
+    image: keras-dev:latest
+    container_name: keras-dev-container
+    volumes:
+      - .:/app
+    ports:
+      - "8888:8888"
+    command: ["sleep", "infinity"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    stdin_open: true
+    tty: true
+

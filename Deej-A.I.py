@@ -1,5 +1,6 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['NUMBA_CACHE_DIR'] = '/tmp/numba_cache'
 
 import dash
 from dash.dependencies import Input, Output, State
@@ -173,6 +174,7 @@ app.layout = html.Div(
 )
 
 def most_similar(positive=[], negative=[], topn=5, noise=0):
+
     if isinstance(positive, str):
         positive = [positive] # broadcast to list
     if isinstance(negative, str):
@@ -205,6 +207,7 @@ def most_similar_by_vec(positive=[], negative=[], topn=5, noise=0):
 def make_playlist(seed_tracks, size=10, lookback=3, noise=0):
     max_tries = 10
     playlist = seed_tracks
+
     while len(playlist) < size:
         similar = most_similar(positive=playlist[-lookback:], topn=max_tries, noise=noise)
         candidates = [candidate[0] for candidate in similar if candidate[0] != playlist[-1]]
@@ -241,7 +244,7 @@ def get_mp3tovec(content_string, filename):
         model_file,
         custom_objects={
             'cosine_proximity':
-            tf.compat.v1.keras.losses.cosine_proximity
+                tf.compat.v1.keras.losses.cosine_proximity
         })
     new_vecs = model.predict(x)
     K.clear_session()
@@ -358,7 +361,7 @@ def play_track(tracks, durations):
                 dcc.Upload(
                     id='upload-image',
                     style={
-                            'display': 'none'
+                        'display': 'none'
                     }
                 )
             ),
@@ -453,7 +456,7 @@ def relative_path(fileout, track):
 
     # Compute the relative path from fileout directory to tracks
     relative = os.path.relpath(track, start=fileout_dir)
-    
+
     return relative
 
 def tracks_to_m3u(fileout, tracks):
@@ -504,7 +507,7 @@ if __name__ == '__main__':
     mp3tovec = pickle.load(open(dump_directory + '/mp3tovecs/' + mp3tovec_file + '.p', 'rb'))
     print(f'{len(mp3tovec)} MP3s')
     if playlist_outfile == None:
-        app.run_server(threaded=False, debug=False)
+        app.run_server(host="0.0.0.0", port=8050,threaded=False, debug=False)
     else:
         if input_song != None:
             if n_songs == None:
