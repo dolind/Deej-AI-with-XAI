@@ -10,6 +10,14 @@ jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --no-browser --NotebookApp.tok
 
 Then use IDE to attach or go to browser localhost:8888
 
+## Minor Canges to source code
+Software would not run otherwise
+
+## Article on Explainability
+I added a notebook on explainability, containing T-SNE, GRAD-CAM and Integrated Gradients.
+
+Read it here [www.storymelange.com/posts/projects/deejai/deejai-xai.html](www.storymelange.com/posts/projects/deejai/deejai-xai.html)
+
 # Deej-A.I.
 
 [Robert Dargavel Smith](mailto:teticio@gmail.com) - Advanced Machine Learning end of Masters project ([MBIT School](http://mbitschool.academy), Madrid, Spain)
