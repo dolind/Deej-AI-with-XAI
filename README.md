@@ -16,7 +16,7 @@ Software would not run otherwise
 ## Article on Explainability
 I added a notebook on explainability, containing T-SNE, GRAD-CAM and Integrated Gradients.
 
-Read it here [www.storymelange.com/posts/projects/deejai/deejai-xai.html](www.storymelange.com/posts/projects/deejai/deejai-xai.html)
+Read it here [www.storymelange.com/posts/projects/deejai/deejai-xai.html](https://www.storymelange.com/posts/projects/deejai/deejai-xai.html)
 
 # Deej-A.I.
 
